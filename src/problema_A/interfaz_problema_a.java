@@ -1,29 +1,37 @@
 package problema_A;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-public class interfaz_problema_a extends JPanel implements ActionListener{
+public class interfaz_problema_a extends JFrame implements ActionListener{
 
 	
 	private JTextArea textAreaEntrada;
 	private JTextArea textAreaSalida;
 	
+	private JPanel panel;
+	
 	public interfaz_problema_a() {
-		setBorder (new TitledBorder ("Panel de información"));
+		panel = new JPanel(new BorderLayout());
+		panel.setBorder (new TitledBorder ("Panel de información"));
         setLayout( new BorderLayout( ) );
+        
         
         textAreaSalida = new JTextArea("Aquí sale el resultado de las operaciones");
         textAreaSalida.setEditable(false);
-        add (new JScrollPane(textAreaSalida), BorderLayout.CENTER);
+       
+   
+        textAreaEntrada = new JTextArea("Aquí debe introducir la entrada");
+        textAreaEntrada.setEditable(true);
         
-        textAreaSalida = new JTextArea("Aquí sale el resultado de las operaciones solicitadas");
-        textAreaSalida.setEditable(false);
-        add (new JScrollPane(textAreaSalida), BorderLayout.CENTER);
+        add( new JScrollPane(textAreaSalida), BorderLayout.EAST);
+        add( new JScrollPane(textAreaEntrada), BorderLayout.WEST);
+        
 	}
 	
 	@Override
