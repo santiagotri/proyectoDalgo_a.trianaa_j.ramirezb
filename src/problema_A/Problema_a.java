@@ -10,46 +10,54 @@ import javax.swing.JOptionPane;
 
 public class Problema_a extends JFrame implements ActionListener{
 
+	private String tiemposDeEjecucion  ="(Tiempos de ejecucion)\n";
 	public Problema_a() {
-		while (true) {
-			Integer [][] lista = solicitarEntrada();
-			Integer [][] copia = lista;
-			imprimirMatriz(lista);
-			
-			String nString = JOptionPane.showInputDialog(this, "Ingrese el exponente", "Exponente", JOptionPane.QUESTION_MESSAGE);
-			int exp = Integer.parseInt(nString);
-			
-			nString = JOptionPane.showInputDialog(this, "Ingrese el modulo", "modulo", JOptionPane.QUESTION_MESSAGE);
-			int modulo = Integer.parseInt(nString);
-			
-			long startTime = System.nanoTime();
-			
-
-			lista = calcularExponente(lista, exp, lista.length);
-			
-			for(int i = 0; i<lista.length; i++) {
-				for (int j = 0; j<lista.length; j++) {
-					lista [i][j] = lista[i][j]%modulo;
+		
+		
+	}
+	
+	public String getTiemposDeEjecucion() {
+		return tiemposDeEjecucion;
+	}
+	
+	public String calcular_problema(String entrada) {
+		try {
+			String[] entradas = entrada.split("\n");
+			int pos = 0;
+			String rta = "";
+			while(pos<entradas.length) {
+				String [] lineaAct = entradas[pos].split(" ");
+				int n = Integer.parseInt(lineaAct[0]);
+				int ex =Integer.parseInt(lineaAct[1]);
+				int modulo =Integer.parseInt(lineaAct[2]);
+				if(n == ex && ex == modulo && modulo == 0) return rta;
+				pos++;
+				Integer [][] matriz = new Integer[n][n];
+				for(int i = 0; i<n; i++) {
+					lineaAct = entradas[pos].split(" ");
+					for(int j = 0; j<n; j++) {
+						matriz [i][j] = Integer.parseInt(lineaAct[j]);
+					}
+					pos++;
 				}
-			}
+				rta += ejecutarParaMatriz(matriz, ex, modulo);
+			}	
+			return rta;
 			
-			long stopTime = System.nanoTime();
-			System.out.println(stopTime - startTime + " nanosegundos");
-			
-			
-			imprimirMatriz(lista);
-			
-			startTime = System.nanoTime();
-			
-			copia = calcularExponenteModulo(copia, exp, copia.length, modulo);
-			
-			stopTime = System.nanoTime();
-			System.out.println(stopTime - startTime + " nanosegundos");
-			
-			imprimirMatriz(copia);
-			
+		}catch (Exception e) {
+			return "Ha existido un error: " +e.getCause();
 		}
 		
+	}
+	
+	
+	private String ejecutarParaMatriz (Integer [][] lista, int exp, int modulo) {
+		long startTime = System.nanoTime();
+		lista = calcularExponenteModulo(lista, exp, lista.length, modulo);
+		long stopTime = System.nanoTime();
+		String tiempo = (stopTime - startTime) + " nanosegundos";
+		tiemposDeEjecucion += tiempo + "\n";
+		return imprimirMatriz(lista);
 	}
 	
 	private Integer[][] calcularExponente( Integer[][] matriz, int ex, int n){
@@ -124,16 +132,15 @@ public class Problema_a extends JFrame implements ActionListener{
 		return rta;
 	}
 	
-	private void imprimirMatriz (Integer[][] matriz) {
+	private String imprimirMatriz (Integer[][] matriz) {
+		String rta = "";
 		for(int filas = 0; filas<matriz.length;filas++) {
-			String imprimir = "( ";
 			for (int columnas = 0; columnas<matriz[0].length;columnas++) {
-				imprimir += matriz[filas][columnas] + " ";
+				rta += matriz[filas][columnas] + " ";
 			}
-			imprimir+= ")";
-			System.out.println(imprimir);
+			rta+= "\n";
 		}
-		System.out.println(" ");
+		return rta;
 	}
 
 	@Override
