@@ -1,6 +1,7 @@
 package problema_A;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 import java.io.Console;
 import java.util.Scanner;
@@ -8,7 +9,11 @@ import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class Problema_a extends JFrame implements ActionListener{
+//Por:
+//Juan Sebastian Ramirez 201923800
+//Santiago Triana 201923265
+
+public class Problema_a {
 
 	private String tiemposDeEjecucion  ="(Tiempos de ejecucion)\n";
 	public Problema_a() {
